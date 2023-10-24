@@ -2,7 +2,7 @@
 
 A flutter application for displaying the current status of trains in the Konkan Railway jurisdiction.
 
-API used: [Konkan Railway API](https://github.com/sibi361/konkan-railway_api)
+API used: [Konkan Railway API](https://github.com/sibi361/konkan-railway_live-train-position)
 
 ## Sample Images
 <p align="center">
