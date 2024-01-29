@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:konkan_rail_timetable/screens/enter_train_no/enter_train_no_screen.dart';
 import 'package:konkan_rail_timetable/screens/fetch_trains_data_screen.dart';
+import 'package:konkan_rail_timetable/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
           surfaceTintColor: Colors.transparent,
         ),
       ),
-      home: const FetchTrainsDataScreen(),
+      home: const HomeScreen(),
     );
   }
 }

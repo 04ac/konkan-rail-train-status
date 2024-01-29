@@ -68,8 +68,13 @@ class _TrainTimelineInfoScreenState extends State<TrainTimelineInfoScreen> {
                     );
                   }
                   final allStations = snapshot.data ?? {};
-                  List<String> allStationsList =
-                      allStations["stations"].keys.toList();
+                  // List<String> allStationsList =
+                  //     allStations["stations"].keys.toList();
+                  // List<Map<String, dynamic>> allStationsList = allStations["stations"];
+                  final allStationsList = allStations["stations"]
+                      .map((station) => station.name)
+                      .toList();
+
                   final currStatIdx = allStationsList.indexOf(currentStaion);
                   return Expanded(
                     child: Padding(

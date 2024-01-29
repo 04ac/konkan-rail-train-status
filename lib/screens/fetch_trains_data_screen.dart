@@ -66,7 +66,11 @@ class _FetchTrainsDataScreenState extends State<FetchTrainsDataScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Konkan Railway Trains"),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {},
+        ),
+        title: const Text("Konkan Rail Trains"),
         actions: [
           IconButton(
             onPressed: () {
@@ -106,7 +110,7 @@ class _FetchTrainsDataScreenState extends State<FetchTrainsDataScreen> {
                   data = snapshot.data ?? {};
                   return Expanded(
                     child: ListView.builder(
-                      itemCount: data["count_trains"],
+                      itemCount: data["count"],
                       itemBuilder: (context, index) {
                         String trainNo =
                             (data["trains"] as Map<String, dynamic>)
