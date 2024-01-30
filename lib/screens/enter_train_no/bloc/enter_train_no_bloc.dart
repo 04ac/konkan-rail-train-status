@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:konkan_rail_timetable/screens/enter_train_no/enter_train_no_repo.dart';
+import 'package:konkan_rail_timetable/screens/enter_train_no/repository/enter_train_no_repo.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -21,6 +21,7 @@ class EnterTrainNoBloc extends Bloc<EnterTrainNoEvent, EnterTrainNoState> {
 
   FutureOr<void> searchBtnClickedActionEvent(SearchBtnClickedActionEvent event,
       Emitter<EnterTrainNoState> emit) async {
+    emit(EnterTrainNoLoadingState());
     final data = await EnterTrainNoRepo.getSingleTrainData(event.trainNo);
     final Map<String, dynamic> jsonResult = jsonDecode(await getStationsJson());
 

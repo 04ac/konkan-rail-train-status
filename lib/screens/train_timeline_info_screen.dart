@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import 'package:konkan_rail_timetable/widgets/train_timeline_tile.dart';
@@ -22,7 +25,7 @@ class TrainTimelineInfoScreen extends StatefulWidget {
 class _TrainTimelineInfoScreenState extends State<TrainTimelineInfoScreen> {
   @override
   Widget build(BuildContext context) {
-    final String currentStaion =
+    final String currentStation =
         widget.data["trains"][widget.trainNo]["station"];
     final String currStatus = widget.data["trains"][widget.trainNo]["status"];
     final String direction = widget.data["trains"][widget.trainNo]["direction"];
@@ -68,14 +71,14 @@ class _TrainTimelineInfoScreenState extends State<TrainTimelineInfoScreen> {
                     );
                   }
                   final allStations = snapshot.data ?? {};
-                  // List<String> allStationsList =
-                  //     allStations["stations"].keys.toList();
-                  // List<Map<String, dynamic>> allStationsList = allStations["stations"];
-                  final allStationsList = allStations["stations"]
-                      .map((station) => station.name)
+                  final List allStationsList = allStations["stations"]
+                      .map((station) => station["name"])
                       .toList();
 
-                  final currStatIdx = allStationsList.indexOf(currentStaion);
+                  final currStatIdx = allStationsList
+                      .map((e) => e.toString().toLowerCase())
+                      .toList()
+                      .indexOf(currentStation);
                   return Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),

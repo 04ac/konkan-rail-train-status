@@ -18,3 +18,5 @@ class EnterTrainNoSuccessState extends EnterTrainNoState {
     required this.stations,
   });
 }
+
+class EnterTrainNoLoadingState extends EnterTrainNoState {}
