@@ -7,4 +7,6 @@ class Constants {
 
   static const FETCH_SINGLE_TRAIN_API =
       "https://konkan-railway-api.vercel.app/api/v4/fetchTrain";
+
+  static const CACHE_STATIONS_DAYS = 31;
 }
