@@ -5,9 +5,10 @@ import 'package:http/http.dart' as http;
 import '../../../utils/constants.dart';
 
 class FetchTrainsDataRepo {
+  static http.Client client = http.Client();
   static Future<Map<String, dynamic>> getCurrentTrains() async {
     try {
-      final res = await http.get(
+      final res = await client.get(
         Uri.parse(
           Constants.FETCH_TRAINS_API,
         ),
@@ -25,7 +26,7 @@ class FetchTrainsDataRepo {
 
   static Future<Map<String, dynamic>> getStations() async {
     try {
-      final res = await http.get(
+      final res = await client.get(
         Uri.parse(
           Constants.FETCH_STATIONS_API,
         ),

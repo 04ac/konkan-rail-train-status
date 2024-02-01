@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:konkan_rail_timetable/screens/train_timeline_info_screen.dart';
 import 'package:konkan_rail_timetable/screens/fetch_trains_data/repository/fetch_trains_data_repo.dart';
+import 'package:konkan_rail_timetable/utils/drawer.dart';
 import 'package:konkan_rail_timetable/widgets/trains_list_item.dart';
 
 class FetchTrainsDataScreen extends StatefulWidget {
@@ -27,6 +28,7 @@ class _FetchTrainsDataScreenState extends State<FetchTrainsDataScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const AppDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
@@ -37,10 +39,10 @@ class _FetchTrainsDataScreenState extends State<FetchTrainsDataScreen> {
         child: const Icon(Icons.refresh),
       ),
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.menu),
+        //   onPressed: () {},
+        // ),
         title: const Text("Konkan Rail Trains"),
         actions: [
           IconButton(

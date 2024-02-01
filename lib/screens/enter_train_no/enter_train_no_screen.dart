@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:konkan_rail_timetable/screens/train_timeline_info_screen.dart';
-
 import 'bloc/enter_train_no_bloc.dart';
 
 class EnterTrainNoScreen extends StatefulWidget {
@@ -100,7 +99,9 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
                     ),
                   ),
                 ),
