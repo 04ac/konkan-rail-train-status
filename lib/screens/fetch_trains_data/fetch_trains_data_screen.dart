@@ -67,7 +67,8 @@ class _FetchTrainsDataScreenState extends State<FetchTrainsDataScreen> {
                   if (snapshot.hasError) {
                     return const Expanded(
                       child: Center(
-                        child: Text("An unexpected error occurred"),
+                        child: Text(
+                            "An unexpected error occurred, please try again after a while."),
                       ),
                     );
                   }

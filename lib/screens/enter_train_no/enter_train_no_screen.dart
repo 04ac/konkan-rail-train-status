@@ -31,7 +31,7 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
-                "Single Train Fetch\n(Uses less data)",
+                "Single Train Information Fetcher\n(Best for slow internet)",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
@@ -42,7 +42,8 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
               ),
               TextField(
                 controller: _trainNoTec,
-                decoration: const InputDecoration(hintText: "Enter Train No."),
+                decoration:
+                    const InputDecoration(hintText: "Enter train number"),
               ),
               const SizedBox(
                 height: 30,
@@ -54,7 +55,7 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
                     switch (state.runtimeType) {
                       case EnterTrainNoLoadingState:
                         const snackBar = SnackBar(
-                          content: Text('Train Details loading...'),
+                          content: Text('Fetching train details...'),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       case EnterTrainNoSuccessState:
@@ -77,11 +78,18 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
                             },
                           ),
                         );
-                      case EnterTrainNoErrorState:
+                      case EnterTrainNoErrorStateBlankInput:
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        const snackBar = SnackBar(
+                          content: Text("Error: Train number is blank"),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        break;
+                      case EnterTrainNoErrorStateRequestFailed:
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         const snackBar = SnackBar(
                           content: Text(
-                              "Error: Train number not found. It might not have started yet."),
+                              "Error: Train not found. It might not have started yet."),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       default:

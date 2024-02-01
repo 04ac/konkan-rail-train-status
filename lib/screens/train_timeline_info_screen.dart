@@ -83,7 +83,7 @@ class _TrainTimelineInfoScreenState extends State<TrainTimelineInfoScreen> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: ListView.builder(
-                        itemCount: 4,
+                        itemCount: allStations["count"],
                         itemBuilder: (context, index) {
                           bool isPast = index <= 1;
                           int currItemIdx = isDown
