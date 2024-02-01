@@ -41,6 +41,7 @@ class _HomePageWIthNavBarState extends State<HomePageWIthNavBar> {
             icon: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Icon(Icons.train_outlined),
                 Icon(Icons.train),
                 Icon(Icons.train_outlined),
               ],
@@ -49,7 +50,7 @@ class _HomePageWIthNavBarState extends State<HomePageWIthNavBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.train_outlined),
-            label: 'Single Train Fetch',
+            label: 'Single Train',
           ),
         ],
         currentIndex: _selectedIndex,

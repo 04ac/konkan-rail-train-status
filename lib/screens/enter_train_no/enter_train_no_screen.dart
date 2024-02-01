@@ -31,7 +31,7 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
-                "Single Train Information Fetcher\n(Best for slow connections)",
+                "Single Train Information Fetcher\n(Best for slow internet)",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
