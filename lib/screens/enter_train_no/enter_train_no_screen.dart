@@ -78,7 +78,14 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
                             },
                           ),
                         );
-                      case EnterTrainNoErrorState:
+                      case EnterTrainNoErrorStateBlankInput:
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        const snackBar = SnackBar(
+                          content: Text("Error: Train number is blank"),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        break;
+                      case EnterTrainNoErrorStateRequestFailed:
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         const snackBar = SnackBar(
                           content: Text(
