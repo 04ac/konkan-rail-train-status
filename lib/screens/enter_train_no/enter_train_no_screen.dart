@@ -53,11 +53,19 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
                 child: BlocListener<EnterTrainNoBloc, EnterTrainNoState>(
                   listener: (context, state) {
                     switch (state.runtimeType) {
+                      case EnterTrainNoErrorStateBlankInput:
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        const snackBar = SnackBar(
+                          content: Text("Error: Train number is blank"),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        break;
                       case EnterTrainNoLoadingState:
                         const snackBar = SnackBar(
                           content: Text('Fetching train details...'),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        break;
                       case EnterTrainNoSuccessState:
                         final successState = state as EnterTrainNoSuccessState;
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -78,12 +86,6 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
                             },
                           ),
                         );
-                      case EnterTrainNoErrorStateBlankInput:
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        const snackBar = SnackBar(
-                          content: Text("Error: Train number is blank"),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         break;
                       case EnterTrainNoErrorStateRequestFailed:
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -92,6 +94,7 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
                               "Error: Train not found. It might not have started yet."),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        break;
                       default:
                     }
                   },
