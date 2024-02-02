@@ -9,4 +9,6 @@ class Constants {
       "https://konkan-railway-api.vercel.app/api/v4/fetchTrain";
 
   static const CACHE_STATIONS_DAYS = 31;
+
+  static const String APPBAR_TITLE_TEXT = "Konkan Trains Live Status";
 }

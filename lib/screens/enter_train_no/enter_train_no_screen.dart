@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:konkan_rail_timetable/screens/train_timeline_info_screen.dart';
 import 'bloc/enter_train_no_bloc.dart';
+import 'package:konkan_rail_timetable/utils/constants.dart';
 
 class EnterTrainNoScreen extends StatefulWidget {
   const EnterTrainNoScreen({super.key});
@@ -21,7 +22,7 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
           icon: const Icon(Icons.menu),
           onPressed: () {},
         ),
-        title: const Text("Konkan Rail Trains"),
+        title: const Text(Constants.APPBAR_TITLE_TEXT),
       ),
       body: Container(
         alignment: Alignment.center,

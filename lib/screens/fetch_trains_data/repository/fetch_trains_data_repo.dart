@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-import '../../../utils/constants.dart';
+import 'package:konkan_rail_timetable/utils/constants.dart';
 
 class FetchTrainsDataRepo {
   static http.Client client = http.Client();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:konkan_rail_timetable/utils/colors.dart';
+import 'package:konkan_rail_timetable/utils/constants.dart';
 
 import '../screens/credits_screen.dart';
 
@@ -20,7 +21,7 @@ class AppDrawer extends StatelessWidget {
             child: Column(
               children: [
                 const Text(
-                  'Konkan Rail Trains',
+                  Constants.APPBAR_TITLE_TEXT,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,

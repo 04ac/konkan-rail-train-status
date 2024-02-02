@@ -3,6 +3,7 @@ import 'package:konkan_rail_timetable/screens/train_timeline_info_screen.dart';
 import 'package:konkan_rail_timetable/screens/fetch_trains_data/repository/fetch_trains_data_repo.dart';
 import 'package:konkan_rail_timetable/utils/drawer.dart';
 import 'package:konkan_rail_timetable/widgets/trains_list_item.dart';
+import 'package:konkan_rail_timetable/utils/constants.dart';
 
 class FetchTrainsDataScreen extends StatefulWidget {
   const FetchTrainsDataScreen({super.key});
@@ -43,7 +44,7 @@ class _FetchTrainsDataScreenState extends State<FetchTrainsDataScreen> {
         //   icon: const Icon(Icons.menu),
         //   onPressed: () {},
         // ),
-        title: const Text("Konkan Rail Trains"),
+        title: const Text(Constants.APPBAR_TITLE_TEXT),
         actions: [
           IconButton(
             onPressed: () {
