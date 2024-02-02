@@ -74,6 +74,10 @@ class _TrainTimelineInfoScreenState extends State<TrainTimelineInfoScreen> {
                   final List allStationsList = allStations["stations"]
                       .map((station) => station["name"])
                       .toList();
+                  final List allStationsDescriptionsList =
+                      allStations["stations"]
+                          .map((station) => station["description"])
+                          .toList();
 
                   final currStatIdx = allStationsList
                       .map((e) => e.toString().toLowerCase())
@@ -120,16 +124,42 @@ class _TrainTimelineInfoScreenState extends State<TrainTimelineInfoScreen> {
                                 ),
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 20),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    toBeginningOfSentenceCase(
-                                        allStationsList[currItemIdx])!,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: index <= 1
-                                          ? Colors.white
-                                          : Colors.black,
+                                child: InkWell(
+                                  onTap: () {
+                                    final descriptionText =
+                                        allStationsDescriptionsList[
+                                            currItemIdx];
+
+                                    SnackBar snackBar;
+
+                                    if (descriptionText != "" &&
+                                        descriptionText != "--") {
+                                      snackBar = SnackBar(
+                                        content: Text(descriptionText),
+                                      );
+                                    } else {
+                                      snackBar = const SnackBar(
+                                        content: Text(
+                                            "No description found for this station"),
+                                      );
+                                    }
+
+                                    ScaffoldMessenger.of(context)
+                                        .hideCurrentSnackBar();
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  },
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      toBeginningOfSentenceCase(
+                                          allStationsList[currItemIdx])!,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: index <= 1
+                                            ? Colors.white
+                                            : Colors.black,
+                                      ),
                                     ),
                                   ),
                                 ),
