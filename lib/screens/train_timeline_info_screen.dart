@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import 'package:konkan_rail_timetable/widgets/train_timeline_tile.dart';
@@ -32,6 +29,22 @@ class _TrainTimelineInfoScreenState extends State<TrainTimelineInfoScreen> {
     final bool isDown = direction == 'down';
     final bool isLeft = currStatus == 'left';
     final trainData = widget.data!["trains"][widget.trainNo];
+
+    final String delay;
+
+    if (trainData["delayedTime"]["hours"] == "0" ||
+        trainData["delayedTime"]["hours"] == "00") {
+      if (trainData["delayedTime"]["minutes"] == "0" ||
+          trainData["delayedTime"]["minutes"] == "00") {
+        delay = "On time";
+      } else {
+        delay = "Delay: ${trainData["delayedTime"]["minutes"]} minutes";
+      }
+    } else {
+      delay =
+          "Delay: ${trainData["delayedTime"]["hours"]} hours, ${trainData["delayedTime"]["minutes"]} minutes";
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(trainData["name"]),
@@ -53,7 +66,7 @@ class _TrainTimelineInfoScreenState extends State<TrainTimelineInfoScreen> {
                     "Station: ${toBeginningOfSentenceCase(trainData["station"])}\n"
                     "${toBeginningOfSentenceCase(trainData["status"])} at "
                     "${trainData["statusTime"]["hours"]} hours, ${trainData["statusTime"]["minutes"]} minutes\n"
-                    "Delay: ${trainData["delayedTime"]["hours"]} hours, ${trainData["delayedTime"]["minutes"]} minutes",
+                    "$delay",
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 ],

@@ -8,13 +8,29 @@ class TrainsListItem extends StatelessWidget {
       required this.data,
       required this.idx});
 
-  String trainNo;
+  final String trainNo;
   final data;
-  int idx;
+  final int idx;
 
   @override
   Widget build(BuildContext context) {
     final trainData = data!["trains"][trainNo];
+
+    final String delay;
+
+    if (trainData["delayedTime"]["hours"] == "0" ||
+        trainData["delayedTime"]["hours"] == "00") {
+      if (trainData["delayedTime"]["minutes"] == "0" ||
+          trainData["delayedTime"]["minutes"] == "00") {
+        delay = "On time";
+      } else {
+        delay = "Delay: ${trainData["delayedTime"]["minutes"]} minutes";
+      }
+    } else {
+      delay =
+          "Delay: ${trainData["delayedTime"]["hours"]} hours, ${trainData["delayedTime"]["minutes"]} minutes";
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ClipRRect(
@@ -24,13 +40,14 @@ class TrainsListItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           title: Text("${trainData["name"]} - $trainNo"),
-          subtitle: Text("Status: ${trainData["status"]}\n"
+          subtitle: Text(
+              "Status: ${toBeginningOfSentenceCase(trainData["status"])}\n"
               "Last Station: ${toBeginningOfSentenceCase(trainData["station"])}\n"
               "${toBeginningOfSentenceCase(trainData["status"])} at "
               "${trainData["statusTime"]["hours"]} hours, ${trainData["statusTime"]["minutes"]} minutes\n"
-              "Delay: ${trainData["delayedTime"]["hours"]} hours, ${trainData["delayedTime"]["minutes"]} minutes\n"
+              "${delay}\n"
               "Train type: ${trainData["type"]}\n"
-              "Direction: ${trainData["direction"]}"),
+              "Direction: ${toBeginningOfSentenceCase(trainData["direction"])}"),
           tileColor: idx % 2 == 0
               ? Colors.yellow.shade200
               : Colors.lightGreen.shade200,
