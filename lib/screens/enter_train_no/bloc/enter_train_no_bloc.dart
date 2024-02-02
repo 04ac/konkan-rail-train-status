@@ -16,19 +16,17 @@ class EnterTrainNoBloc extends Bloc<EnterTrainNoEvent, EnterTrainNoState> {
   FutureOr<void> searchBtnClickedActionEvent(SearchBtnClickedActionEvent event,
       Emitter<EnterTrainNoState> emit) async {
     emit(EnterTrainNoLoadingState());
-    if (event.trainNo == "") {
-      emit(EnterTrainNoErrorStateBlankInput());
+
+    final data = await EnterTrainNoRepo.getSingleTrainData(event.trainNo);
+
+    if (data["success"] == false) {
+      emit(EnterTrainNoErrorStateRequestFailed());
     } else {
-      final data = await EnterTrainNoRepo.getSingleTrainData(event.trainNo);
       final Map<String, dynamic> jsonResult =
           await FetchTrainsDataRepo.getStations();
 
-      if (data["success"] == false) {
-        emit(EnterTrainNoErrorStateRequestFailed());
-      } else {
-        emit(EnterTrainNoSuccessState(
-            data: data, trainNo: event.trainNo, stations: jsonResult));
-      }
+      emit(EnterTrainNoSuccessState(
+          data: data, trainNo: event.trainNo, stations: jsonResult));
     }
   }
 }

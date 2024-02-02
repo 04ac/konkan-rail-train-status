@@ -53,13 +53,6 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
                 child: BlocListener<EnterTrainNoBloc, EnterTrainNoState>(
                   listener: (context, state) {
                     switch (state.runtimeType) {
-                      case EnterTrainNoErrorStateBlankInput:
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        const snackBar = SnackBar(
-                          content: Text("Error: Train number is blank"),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        break;
                       case EnterTrainNoLoadingState:
                         const snackBar = SnackBar(
                           content: Text('Fetching train details...'),
@@ -100,8 +93,16 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
                   },
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      _bloc.add(SearchBtnClickedActionEvent(
-                          trainNo: _trainNoTec.text));
+                      if (_trainNoTec.text == "") {
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        const snackBar = SnackBar(
+                          content: Text("Error: Train number is blank"),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } else {
+                        _bloc.add(SearchBtnClickedActionEvent(
+                            trainNo: _trainNoTec.text));
+                      }
                     },
                     icon: const Icon(Icons.search),
                     label: const Text(
