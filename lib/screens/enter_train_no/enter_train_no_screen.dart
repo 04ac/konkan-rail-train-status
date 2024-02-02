@@ -14,6 +14,8 @@ class EnterTrainNoScreen extends StatefulWidget {
 class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
   final _trainNoTec = TextEditingController();
   final _bloc = EnterTrainNoBloc();
+  var response = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +54,7 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
               BlocProvider(
                 create: (context) => _bloc,
                 child: BlocListener<EnterTrainNoBloc, EnterTrainNoState>(
-                  listener: (context, state) {
+                  listener: (context, state) async {
                     switch (state.runtimeType) {
                       case EnterTrainNoLoadingState:
                         const snackBar = SnackBar(
@@ -63,23 +65,29 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
                       case EnterTrainNoSuccessState:
                         final successState = state as EnterTrainNoSuccessState;
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        Navigator.push(
+
+                        response = await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) {
                               Map<String, dynamic> mp = {};
                               mp.putIfAbsent("trains", () => successState.data);
                               return TrainTimelineInfoScreen(
-                                trainNo: successState.trainNo,
-                                data: mp,
-                                allStations: Future.delayed(
-                                  Duration.zero,
-                                  () => successState.stations,
-                                ),
-                              );
+                                  trainNo: successState.trainNo,
+                                  data: mp,
+                                  allStations: Future.delayed(
+                                    Duration.zero,
+                                    () => successState.stations,
+                                  ),
+                                  showRefreshButton: true);
                             },
                           ),
                         );
+
+                        if (response) {
+                          _bloc.add(SearchBtnClickedActionEvent(
+                              trainNo: successState.trainNo));
+                        }
                         break;
                       case EnterTrainNoErrorStateRequestFailed:
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();

@@ -91,10 +91,10 @@ class _FetchTrainsDataScreenState extends State<FetchTrainsDataScreen> {
                           onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => TrainTimelineInfoScreen(
-                                trainNo: trainNo,
-                                data: data,
-                                allStations: allStations,
-                              ),
+                                  trainNo: trainNo,
+                                  data: data,
+                                  allStations: allStations,
+                                  showRefreshButton: false),
                             ),
                           ),
                         );
@@ -170,10 +170,10 @@ class CustomSearchDelegate extends SearchDelegate {
           ),
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => TrainTimelineInfoScreen(
-              trainNo: trainNo,
-              data: data,
-              allStations: allStations,
-            ),
+                trainNo: trainNo,
+                data: data,
+                allStations: allStations,
+                showRefreshButton: false),
           )),
         );
       },
@@ -203,10 +203,10 @@ class CustomSearchDelegate extends SearchDelegate {
           ),
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => TrainTimelineInfoScreen(
-              trainNo: trainNo,
-              data: data,
-              allStations: allStations,
-            ),
+                trainNo: trainNo,
+                data: data,
+                allStations: allStations,
+                showRefreshButton: false),
           )),
         );
       },
