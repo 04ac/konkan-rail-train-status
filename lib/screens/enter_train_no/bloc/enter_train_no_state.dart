@@ -5,8 +5,6 @@ sealed class EnterTrainNoState {}
 
 final class EnterTrainNoInitial extends EnterTrainNoState {}
 
-class EnterTrainNoErrorStateBlankInput extends EnterTrainNoState {}
-
 class EnterTrainNoErrorStateRequestFailed extends EnterTrainNoState {}
 
 class EnterTrainNoSuccessState extends EnterTrainNoState {

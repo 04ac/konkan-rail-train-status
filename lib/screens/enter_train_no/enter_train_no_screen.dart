@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:konkan_rail_timetable/screens/train_timeline_info_screen.dart';
 import 'bloc/enter_train_no_bloc.dart';
+import 'package:konkan_rail_timetable/utils/constants.dart';
 
 class EnterTrainNoScreen extends StatefulWidget {
   const EnterTrainNoScreen({super.key});
@@ -13,6 +14,8 @@ class EnterTrainNoScreen extends StatefulWidget {
 class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
   final _trainNoTec = TextEditingController();
   final _bloc = EnterTrainNoBloc();
+  var response = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +24,7 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
           icon: const Icon(Icons.menu),
           onPressed: () {},
         ),
-        title: const Text("Konkan Rail Trains"),
+        title: const Text(Constants.APPBAR_TITLE_TEXT),
       ),
       body: Container(
         alignment: Alignment.center,
@@ -51,39 +54,40 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
               BlocProvider(
                 create: (context) => _bloc,
                 child: BlocListener<EnterTrainNoBloc, EnterTrainNoState>(
-                  listener: (context, state) {
+                  listener: (context, state) async {
                     switch (state.runtimeType) {
                       case EnterTrainNoLoadingState:
                         const snackBar = SnackBar(
                           content: Text('Fetching train details...'),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        break;
                       case EnterTrainNoSuccessState:
                         final successState = state as EnterTrainNoSuccessState;
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        Navigator.push(
+
+                        response = await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) {
                               Map<String, dynamic> mp = {};
                               mp.putIfAbsent("trains", () => successState.data);
                               return TrainTimelineInfoScreen(
-                                trainNo: successState.trainNo,
-                                data: mp,
-                                allStations: Future.delayed(
-                                  Duration.zero,
-                                  () => successState.stations,
-                                ),
-                              );
+                                  trainNo: successState.trainNo,
+                                  data: mp,
+                                  allStations: Future.delayed(
+                                    Duration.zero,
+                                    () => successState.stations,
+                                  ),
+                                  showRefreshButton: true);
                             },
                           ),
                         );
-                      case EnterTrainNoErrorStateBlankInput:
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        const snackBar = SnackBar(
-                          content: Text("Error: Train number is blank"),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                        if (response) {
+                          _bloc.add(SearchBtnClickedActionEvent(
+                              trainNo: successState.trainNo));
+                        }
                         break;
                       case EnterTrainNoErrorStateRequestFailed:
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -92,13 +96,22 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
                               "Error: Train not found. It might not have started yet."),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        break;
                       default:
                     }
                   },
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      _bloc.add(SearchBtnClickedActionEvent(
-                          trainNo: _trainNoTec.text));
+                      if (_trainNoTec.text == "") {
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        const snackBar = SnackBar(
+                          content: Text("Error: Train number is blank"),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } else {
+                        _bloc.add(SearchBtnClickedActionEvent(
+                            trainNo: _trainNoTec.text));
+                      }
                     },
                     icon: const Icon(Icons.search),
                     label: const Text(
