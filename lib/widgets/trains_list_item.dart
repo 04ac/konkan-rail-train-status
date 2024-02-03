@@ -2,33 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
 class TrainsListItem extends StatelessWidget {
-  TrainsListItem(
+  const TrainsListItem(
       {super.key,
       required this.trainNo,
       required this.data,
       required this.idx});
 
   final String trainNo;
-  final data;
+  final Map<String, dynamic> data;
   final int idx;
 
   @override
   Widget build(BuildContext context) {
-    final trainData = data!["trains"][trainNo];
+    final trainData = data["trains"][trainNo];
 
     final String delay;
 
-    if (trainData["delayedTime"]["hours"] == "0" ||
-        trainData["delayedTime"]["hours"] == "00") {
-      if (trainData["delayedTime"]["minutes"] == "0" ||
-          trainData["delayedTime"]["minutes"] == "00") {
+    String delayHours = trainData["delayedTime"]["hours"].trim();
+    String delayMinutes = trainData["delayedTime"]["minutes"].trim();
+
+    if (int.parse(delayHours == "" ? "0" : delayHours) <= 0) {
+      if (int.parse(delayMinutes == "" ? "0" : delayMinutes) <= 0) {
         delay = "On time";
       } else {
-        delay = "Delay: ${trainData["delayedTime"]["minutes"]} minutes";
+        delay = "Delay: $delayMinutes minutes";
       }
     } else {
-      delay =
-          "Delay: ${trainData["delayedTime"]["hours"]} hours, ${trainData["delayedTime"]["minutes"]} minutes";
+      delay = "Delay: $delayHours hours, $delayMinutes minutes";
     }
 
     return Padding(
@@ -45,7 +45,7 @@ class TrainsListItem extends StatelessWidget {
               "Last Station: ${toBeginningOfSentenceCase(trainData["station"])}\n"
               "${toBeginningOfSentenceCase(trainData["status"])} at "
               "${trainData["statusTime"]["hours"]} hours, ${trainData["statusTime"]["minutes"]} minutes\n"
-              "${delay}\n"
+              "$delay\n"
               "Train type: ${trainData["type"]}\n"
               "Direction: ${toBeginningOfSentenceCase(trainData["direction"])}"),
           tileColor: idx % 2 == 0

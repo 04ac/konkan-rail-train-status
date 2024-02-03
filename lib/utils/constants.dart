@@ -10,5 +10,5 @@ class Constants {
 
   static const CACHE_STATIONS_DAYS = 31;
 
-  static const String APPBAR_TITLE_TEXT = "Konkan Trains Live Status";
+  static const String APPBAR_TITLE_TEXT = "Konkan Live Trains";
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:konkan_rail_timetable/screens/train_timeline_info_screen.dart';
+import 'package:konkan_rail_timetable/screens/train_timeline_info/ui/train_timeline_info_screen.dart';
+import 'package:konkan_rail_timetable/utils/drawer.dart';
 import 'bloc/enter_train_no_bloc.dart';
 import 'package:konkan_rail_timetable/utils/constants.dart';
 
@@ -14,16 +15,12 @@ class EnterTrainNoScreen extends StatefulWidget {
 class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
   final _trainNoTec = TextEditingController();
   final _bloc = EnterTrainNoBloc();
-  var response = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const AppDrawer(),
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
-        ),
         title: const Text(Constants.APPBAR_TITLE_TEXT),
       ),
       body: Container(
@@ -34,7 +31,7 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
-                "Single Train Information Fetcher\n(Best for slow internet)",
+                "Single Train Information Fetcher\n(Best for slow connections)",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
@@ -54,7 +51,7 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
               BlocProvider(
                 create: (context) => _bloc,
                 child: BlocListener<EnterTrainNoBloc, EnterTrainNoState>(
-                  listener: (context, state) async {
+                  listener: (context, state) {
                     switch (state.runtimeType) {
                       case EnterTrainNoLoadingState:
                         const snackBar = SnackBar(
@@ -66,28 +63,24 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
                         final successState = state as EnterTrainNoSuccessState;
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-                        response = await Navigator.push(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) {
                               Map<String, dynamic> mp = {};
                               mp.putIfAbsent("trains", () => successState.data);
                               return TrainTimelineInfoScreen(
-                                  trainNo: successState.trainNo,
-                                  data: mp,
-                                  allStations: Future.delayed(
-                                    Duration.zero,
-                                    () => successState.stations,
-                                  ),
-                                  showRefreshButton: true);
+                                trainNo: successState.trainNo,
+                                data: mp,
+                                allStations: Future.delayed(
+                                  Duration.zero,
+                                  () => successState.stations,
+                                ),
+                              );
                             },
                           ),
-                        );
-
-                        if (response) {
-                          _bloc.add(SearchBtnClickedActionEvent(
-                              trainNo: successState.trainNo));
-                        }
+                        ).whenComplete(() => ScaffoldMessenger.of(context)
+                            .hideCurrentSnackBar());
                         break;
                       case EnterTrainNoErrorStateRequestFailed:
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -109,8 +102,10 @@ class _EnterTrainNoScreenState extends State<EnterTrainNoScreen> {
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } else {
-                        _bloc.add(SearchBtnClickedActionEvent(
-                            trainNo: _trainNoTec.text));
+                        _bloc.add(
+                          SearchBtnClickedActionEvent(
+                              trainNo: _trainNoTec.text),
+                        );
                       }
                     },
                     icon: const Icon(Icons.search),

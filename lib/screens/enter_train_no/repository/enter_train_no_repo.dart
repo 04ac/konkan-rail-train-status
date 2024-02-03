@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../../../utils/constants.dart';
+import 'package:konkan_rail_timetable/utils/constants.dart';
 
 class EnterTrainNoRepo {
   static Future<Map<String, dynamic>> getSingleTrainData(String trainNo) async {

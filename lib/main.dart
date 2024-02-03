@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:konkan_rail_timetable/screens/home_screen_nav_bar.dart';
+import 'package:konkan_rail_timetable/screens/home_page_with_bottom_nav_bar.dart';
 import 'package:konkan_rail_timetable/utils/constants.dart';
 
 void main() {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           surfaceTintColor: Colors.transparent,
         ),
       ),
-      home: const HomePageWIthNavBar(),
+      home: const HomePageWithNavBar(),
     );
   }
 }

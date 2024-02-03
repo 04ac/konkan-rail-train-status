@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:konkan_rail_timetable/screens/enter_train_no/enter_train_no_screen.dart';
-import 'package:konkan_rail_timetable/screens/fetch_trains_data/fetch_trains_data_screen.dart';
+import 'package:konkan_rail_timetable/screens/fetch_trains_data/ui/fetch_trains_data_screen.dart';
 import 'package:konkan_rail_timetable/screens/fetch_trains_data/repository/fetch_trains_data_repo.dart';
 import 'package:http/http.dart' as http;
 
-class HomePageWIthNavBar extends StatefulWidget {
-  const HomePageWIthNavBar({super.key});
+class HomePageWithNavBar extends StatefulWidget {
+  const HomePageWithNavBar({super.key});
 
   @override
-  State<HomePageWIthNavBar> createState() => _HomePageWIthNavBarState();
+  State<HomePageWithNavBar> createState() => _HomePageWithNavBarState();
 }
 
-class _HomePageWIthNavBarState extends State<HomePageWIthNavBar> {
+class _HomePageWithNavBarState extends State<HomePageWithNavBar> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[

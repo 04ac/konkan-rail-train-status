@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:konkan_rail_timetable/screens/train_timeline_info_screen.dart';
+import 'package:konkan_rail_timetable/screens/train_timeline_info/ui/train_timeline_info_screen.dart';
 import 'package:konkan_rail_timetable/screens/fetch_trains_data/repository/fetch_trains_data_repo.dart';
 import 'package:konkan_rail_timetable/utils/drawer.dart';
 import 'package:konkan_rail_timetable/widgets/trains_list_item.dart';
@@ -40,10 +40,6 @@ class _FetchTrainsDataScreenState extends State<FetchTrainsDataScreen> {
         child: const Icon(Icons.refresh),
       ),
       appBar: AppBar(
-        // leading: IconButton(
-        //   icon: const Icon(Icons.menu),
-        //   onPressed: () {},
-        // ),
         title: const Text(Constants.APPBAR_TITLE_TEXT),
         actions: [
           IconButton(
@@ -88,15 +84,18 @@ class _FetchTrainsDataScreenState extends State<FetchTrainsDataScreen> {
                             data: data,
                             idx: index,
                           ),
-                          onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => TrainTimelineInfoScreen(
-                                  trainNo: trainNo,
-                                  data: data,
-                                  allStations: allStations,
-                                  showRefreshButton: false),
-                            ),
-                          ),
+                          onTap: () => Navigator.of(context)
+                              .push(
+                                MaterialPageRoute(
+                                  builder: (context) => TrainTimelineInfoScreen(
+                                    trainNo: trainNo,
+                                    data: data,
+                                    allStations: allStations,
+                                  ),
+                                ),
+                              )
+                              .whenComplete(() => ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar()),
                         );
                       },
                     ),
@@ -170,10 +169,10 @@ class CustomSearchDelegate extends SearchDelegate {
           ),
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => TrainTimelineInfoScreen(
-                trainNo: trainNo,
-                data: data,
-                allStations: allStations,
-                showRefreshButton: false),
+              trainNo: trainNo,
+              data: data,
+              allStations: allStations,
+            ),
           )),
         );
       },
@@ -203,10 +202,10 @@ class CustomSearchDelegate extends SearchDelegate {
           ),
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => TrainTimelineInfoScreen(
-                trainNo: trainNo,
-                data: data,
-                allStations: allStations,
-                showRefreshButton: false),
+              trainNo: trainNo,
+              data: data,
+              allStations: allStations,
+            ),
           )),
         );
       },

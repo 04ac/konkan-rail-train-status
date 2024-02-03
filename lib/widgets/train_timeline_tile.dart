@@ -3,7 +3,7 @@ import 'package:timeline_tile/timeline_tile.dart';
 
 class TrainTimelineTile extends StatelessWidget {
   final bool isFirst;
-  final Widget endchild;
+  final Widget endChild;
   final bool isLast;
   final bool isPast;
   final bool isLeft;
@@ -13,7 +13,7 @@ class TrainTimelineTile extends StatelessWidget {
     super.key,
     required this.isFirst,
     required this.isLast,
-    required this.endchild,
+    required this.endChild,
     required this.isPast,
     required this.isLeft,
     required this.idx,
@@ -41,7 +41,7 @@ class TrainTimelineTile extends StatelessWidget {
         beforeLineStyle:
             LineStyle(color: isPast ? Colors.green : Colors.green.shade100),
         alignment: TimelineAlign.start,
-        endChild: endchild,
+        endChild: endChild,
       ),
     );
   }
