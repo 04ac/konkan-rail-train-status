@@ -1,9 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:konkan_rail_timetable/screens/train_timeline_info_screen.dart';
-import 'package:konkan_rail_timetable/utils/constants.dart';
+import 'package:konkan_rail_timetable/screens/train_timeline_info/ui/train_timeline_info_screen.dart';
+import 'package:konkan_rail_timetable/screens/fetch_trains_data/repository/fetch_trains_data_repo.dart';
+import 'package:konkan_rail_timetable/utils/drawer.dart';
 import 'package:konkan_rail_timetable/widgets/trains_list_item.dart';
+import 'package:konkan_rail_timetable/utils/constants.dart';
 
 class FetchTrainsDataScreen extends StatefulWidget {
   const FetchTrainsDataScreen({super.key});
@@ -17,66 +17,31 @@ class _FetchTrainsDataScreenState extends State<FetchTrainsDataScreen> {
   late Future<Map<String, dynamic>> allStations;
   late Map<String, dynamic> data;
 
-  Future<Map<String, dynamic>> getCurrentTrains() async {
-    try {
-      final res = await http.get(
-        Uri.parse(
-          Constants.FETCH_TRAINS_API,
-        ),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8',
-        },
-      );
-      final data = await jsonDecode(res.body);
-
-      return data;
-    } catch (e) {
-      throw e.toString();
-    }
-  }
-
-  Future<Map<String, dynamic>> getStations() async {
-    try {
-      final res = await http.get(
-        Uri.parse(
-          Constants.FETCH_STATIONS_API,
-        ),
-        headers: <String, String>{
-          'Content-Type': 'application/json;charset=UTF-8',
-        },
-      );
-      final data = await jsonDecode(res.body);
-
-      return data;
-    } catch (e) {
-      throw e.toString();
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     setState(() {
-      respo = getCurrentTrains();
-      allStations = getStations();
+      respo = FetchTrainsDataRepo.getCurrentTrains();
+      allStations = FetchTrainsDataRepo.getStations();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const AppDrawer(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            respo = FetchTrainsDataRepo.getCurrentTrains();
+            allStations = FetchTrainsDataRepo.getStations();
+          });
+        },
+        child: const Icon(Icons.refresh),
+      ),
       appBar: AppBar(
-        title: const Text("Konkan Railway Trains"),
+        title: const Text(Constants.APPBAR_TITLE_TEXT),
         actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                respo = getCurrentTrains();
-                allStations = getStations();
-              });
-            },
-            icon: const Icon(Icons.refresh),
-          ),
           IconButton(
             onPressed: () {
               showSearch(
@@ -99,14 +64,15 @@ class _FetchTrainsDataScreenState extends State<FetchTrainsDataScreen> {
                   if (snapshot.hasError) {
                     return const Expanded(
                       child: Center(
-                        child: Text("An unexpected error occurred"),
+                        child: Text(
+                            "An unexpected error occurred, please try again after a while."),
                       ),
                     );
                   }
                   data = snapshot.data ?? {};
                   return Expanded(
                     child: ListView.builder(
-                      itemCount: data["count_trains"],
+                      itemCount: data["count"],
                       itemBuilder: (context, index) {
                         String trainNo =
                             (data["trains"] as Map<String, dynamic>)
@@ -118,14 +84,18 @@ class _FetchTrainsDataScreenState extends State<FetchTrainsDataScreen> {
                             data: data,
                             idx: index,
                           ),
-                          onTap: () =>
-                              Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TrainTimelineInfoScreen(
-                              trainNo: trainNo,
-                              data: data,
-                              allStations: allStations,
-                            ),
-                          )),
+                          onTap: () => Navigator.of(context)
+                              .push(
+                                MaterialPageRoute(
+                                  builder: (context) => TrainTimelineInfoScreen(
+                                    trainNo: trainNo,
+                                    data: data,
+                                    allStations: allStations,
+                                  ),
+                                ),
+                              )
+                              .whenComplete(() => ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar()),
                         );
                       },
                     ),
