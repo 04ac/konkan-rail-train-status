@@ -1,16 +1,18 @@
 # Konkan Rail Train Status
 
-A flutter application for displaying the current status of trains in the Konkan Railway jurisdiction.
+A flutter application for displaying the current status of trains in the Konkan Railway jurisdiction. \
+Part of the [Konkan Rail Open Source Project](https://github.com/04ac/open-source-konkan-rail/)
 
 API used: [Konkan Railway API](https://github.com/sibi361/konkan-railway_live-train-position)
 
 ## Sample Images
 <p align="center">
-  <img src="screenshots/Image1.jpg" width="256" hspace="4">
-  <img src="screenshots/Image2.jpg" width="256" hspace="4">
-  <img src="screenshots/Image3.jpg" width="256" hspace="4">
+  <img src="screenshots/Image6.jpg" width="256" hspace="4">
+  <img src="screenshots/Image13.jpg" width="256" hspace="4">
+  <img src="screenshots/Image11.jpg" width="256" hspace="4">
   <img src="screenshots/Image4.jpg" width="256" hspace="4">
   <img src="screenshots/Image5.jpg" width="256" hspace="4">
+  <img src="screenshots/Image12.jpg" width="256" hspace="4">
 </p>
 
 ## Install, build and run!
